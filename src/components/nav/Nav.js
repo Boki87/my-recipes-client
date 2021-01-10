@@ -1,6 +1,9 @@
 import styled from 'styled-components'
 
-import Logo from '../assets/icons/restaurant.svg'
+import Logo from '../../assets/icons/restaurant.svg'
+import NavUserDropdown from './NavUserDropdown'
+
+import {Container} from '../../styles/Container'
 
 const NavWrapper = styled.nav`
 
@@ -10,14 +13,6 @@ const NavWrapper = styled.nav`
     display: flex;
     justify-content: center;
     align-items:center;
-
-    .innerWrapper {
-        display: flex;
-        max-width: 1100px;
-        width: 100%;
-        height:100%;
-        align-items:center;        
-    }
 
 `
 
@@ -42,6 +37,7 @@ const StyledSearch = styled.div`
     input {
         font-size: 1.1rem;
         width: 100%;
+        max-width: 400px;
         height:100%;
         border: none;
         outline: none;
@@ -57,18 +53,12 @@ const StyledSearch = styled.div`
 
 `
 
-const StyledAvatarMenu = styled.div`
-    width: 100px;
-    height:100%;
-    display:flex;
-    align-items: center;
-    justify-content: center;    
-`
+
 
 const Nav = () => {
     return (
         <NavWrapper>
-            <div className='innerWrapper'>
+            <Container style={{display:'flex', alignItems:'center', height:'100%'}}>
                 <StyledLogo className='font2'>
                     <img src={Logo} alt=""/>
                     My Recipes
@@ -82,12 +72,8 @@ const Nav = () => {
                     </span>
                 </StyledSearch>
 
-                <StyledAvatarMenu>
-                    <span className="material-icons">
-                        face
-                    </span>
-                </StyledAvatarMenu>    
-            </div>
+                <NavUserDropdown />
+            </Container>
             
         </NavWrapper>
     )

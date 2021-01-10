@@ -50,6 +50,12 @@ html {
 	*:focus {
 	  outline: none;
 	}
+
+	.link {
+		color: ${(props) => props.theme.secondaryColor};
+		text-decoration: underline;
+		cursor: pointer;
+	}
 `;
 
 export default GlobalStyle
