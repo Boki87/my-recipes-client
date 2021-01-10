@@ -1,28 +1,16 @@
-import logo from './logo.svg';
-import './App.css';
+import {ThemeProvider} from 'styled-components'
+
+import GlobalStyle from './styles/GlobalStyle'
+import {lightTheme} from './styles/theme'
+
+import Routing from './Routing'
 
 function App() {
   return (
-    <div className="app">
-      <nav>
-        <div>
-          logo
-        </div>
-
-        <div>
-          search
-        </div>
-
-        <div>
-          use avatar / login
-        </div>
-      </nav>
-
-      
-      <main>
-
-      </main>
-    </div>
+    <ThemeProvider theme={lightTheme}>
+      <GlobalStyle/>
+      <Routing/>
+    </ThemeProvider>
   );
 }
 
