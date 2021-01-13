@@ -1,20 +1,5 @@
 import styled from 'styled-components'
-
-import SoupIcon from '../../assets/icons/soup.svg'
-import SaladIcon from '../../assets/icons/vegetables.svg'
-import MainCourseIcon from '../../assets/icons/steak.svg'
-import DessertIcon from '../../assets/icons/pudding.svg'
-import BreakfastIcon from '../../assets/icons/breakfast.svg'
-import BeverageIcon from '../../assets/icons/ice cream.svg'
-
-const categories = [
-    {title: "Soup", icon : SoupIcon},
-    {title: "Salad", icon : SaladIcon},
-    {title: "Main course", icon : MainCourseIcon},
-    {title: "Dessert", icon : DessertIcon},
-    {title: "Breakfast", icon : BreakfastIcon},
-    {title: "Beverage", icon : BeverageIcon},
-]
+import {categories} from '../../utils'
 
 
 const StyledCatBtn = styled.div`

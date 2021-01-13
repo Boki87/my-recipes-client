@@ -5,11 +5,12 @@ import {apiCall} from '../utils'
 import CategoryFilter from '../components/categoryFilter/CategoryFilter'
 import RecipeCard from '../components/RecipeCard'
 
+import {useModalsContext} from '../context'
 
 const StyledRecipesWrapper = styled.div`
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: center;    
 `
 
 const StyledHeader = styled.div`
@@ -28,6 +29,8 @@ const Home = () => {
 
     const [recipes, setRecipes] = useState([])
 
+    let {setAuthModal} = useModalsContext()
+
     useEffect( () => {
 
         async function getRecipes() {
@@ -43,7 +46,7 @@ const Home = () => {
             <StyledHeader>
                 <p>Welcome to <span className='font2 brand'>My Recipes</span></p>
                 <p>Explore below a wast collection of user submitted recipes.</p>
-                <p>To submit your own <span className='link'>Login</span> or <span className='link'>Register</span> if you don't have an account.</p>
+                <p>To submit your own <span onClick={() => setAuthModal(true, 'login')} className='link'>Login</span> or <span onClick={() => setAuthModal(true, 'signup')} className='link'>SignUp</span> if you don't have an account.</p>
             </StyledHeader>
 
             <CategoryFilter />

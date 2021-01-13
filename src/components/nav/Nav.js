@@ -1,3 +1,4 @@
+import {Link} from 'react-router-dom'
 import styled from 'styled-components'
 
 import Logo from '../../assets/icons/restaurant.svg'
@@ -6,7 +7,7 @@ import NavUserDropdown from './NavUserDropdown'
 import {Container} from '../../styles/Container'
 
 const NavWrapper = styled.nav`
-
+    background: ${(props) => props.theme.bgPrimary};
     width: 100%;
     height: 55px;
     border-bottom: 1px solid ${({theme}) => theme.bgSecondary};
@@ -16,7 +17,7 @@ const NavWrapper = styled.nav`
 
 `
 
-const StyledLogo = styled.div`
+const StyledLogo = styled(Link)`
     height:100%;
     margin-left: 20px;
     display: flex;    
@@ -59,7 +60,7 @@ const Nav = () => {
     return (
         <NavWrapper>
             <Container style={{display:'flex', alignItems:'center', height:'100%'}}>
-                <StyledLogo className='font2'>
+                <StyledLogo to='/' className='font2'>
                     <img src={Logo} alt=""/>
                     My Recipes
                 </StyledLogo>

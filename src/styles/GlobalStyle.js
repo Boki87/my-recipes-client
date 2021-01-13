@@ -16,7 +16,7 @@ html {
 		font-family: 'Fira Sans', sans-serif;
 		font-size: 1rem;
 		line-height: 1.7;
-		background: ${(props) => props.theme.bgPrimary};
+		background: ${(props) => props.theme.bgSecondary};
 		color: ${(props) => props.theme.textPrimary};
 		overflow-x: hidden;
 	}

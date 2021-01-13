@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import {Link} from 'react-router-dom'
 
 import ClockIcon from '../assets/icons/clock.svg'
 import PlateIcon from '../assets/icons/plate.svg'
@@ -6,11 +7,12 @@ import PlateIcon from '../assets/icons/plate.svg'
 const StyledRecipeCard = styled.div`
     width: 220px;
     height: 250px;
-    margin: 10px;
-    border: 1px solid ${({theme}) => theme.bgSecondary};
-    border-radius: 4px;
+    margin: 10px; 
+    background: ${(props) => props.theme.bgPrimary};
+    border-radius: 8px;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
     .recipe_image {
         height: 120px;
         width: 100%;
@@ -125,11 +127,11 @@ const RecipeCard = ({
             </div>
             <div className='recipe_body'>
 
-                <div className='open_btn'>
+                <Link to={`/recipe/${recipe._id}`} className='open_btn'>
                     <span className="material-icons">
                         launch
                     </span>
-                </div>
+                </Link>
 
 
                 <div className='name'>{name}</div>

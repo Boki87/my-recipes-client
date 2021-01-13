@@ -1,19 +1,61 @@
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
+import {BrowserRouter as Router, Route, Switch, useLocation} from 'react-router-dom'
+import {AnimatePresence, motion} from 'framer-motion'
+
 
 import Nav from './components/nav/Nav'
 import Home from './pages/Home'
+import Recipe from './pages/Recipe'
 import {Container} from './styles/Container'
 
+const pageVariants = {
+    initial: {
+      opacity: 0,
+      y: 30
+    },
+    in: {
+      opacity: 1,
+      y:0
+    },
+    out: {
+      opacity: 0,
+      y:30
+    },
+  }
+
+
 const Routing = () => {
+    const location = useLocation()
     return (
-        <Router>
+            <>
             <Nav/>
             <Container style={{height:'calc(100vh - 55px)', margin: '0 auto', overflow:'auto'}}>
-                <Switch>
-                    <Route path='/' component={Home}/>
-                </Switch>
+                <AnimatePresence exitBeforeEnter>
+                    <Switch location={location} key={location.pathname}>
+                        <Route exact path='/'>
+                            <motion.div
+                                initial="initial"
+                                animate="in"
+                                exit="out"
+                                variants={pageVariants}
+                            >
+                                <Home />
+                            </motion.div>
+                        </Route>
+                        <Route exact path='/recipe/:id'>
+                            <motion.div
+                                initial="initial"
+                                animate="in"
+                                exit="out"
+                                variants={pageVariants}
+                            >
+                                <Recipe />
+                            </motion.div>
+                            
+                        </Route>
+                    </Switch>
+                </AnimatePresence>
             </Container>
-        </Router>
+        </>
     )
 }
 
