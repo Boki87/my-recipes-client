@@ -1,11 +1,12 @@
-import {BrowserRouter as Router, Route, Switch, useLocation} from 'react-router-dom'
+import {Route, Switch, useLocation} from 'react-router-dom'
 import {AnimatePresence, motion} from 'framer-motion'
-
+import {PrivateRoute} from './utils/PrivateRoute'
 
 import Nav from './components/nav/Nav'
 import Home from './pages/Home'
 import Recipe from './pages/Recipe'
 import Profile from './pages/Profile'
+
 import {Container} from './styles/Container'
 
 const pageVariants = {
@@ -53,17 +54,19 @@ const Routing = () => {
                             </motion.div>
                             
                         </Route>
-                        <Route exact path='/profile'>
-                            <motion.div
-                                initial="initial"
-                                animate="in"
-                                exit="out"
-                                variants={pageVariants}
-                            >
-                                <Profile />
-                            </motion.div>
-                            
-                        </Route>
+                        
+                            <PrivateRoute path='/profile'>
+                                <motion.div
+                                    initial="initial"
+                                    animate="in"
+                                    exit="out"
+                                    variants={pageVariants}
+                                >
+                                    <Profile />
+                                </motion.div>
+                                
+                            </PrivateRoute>
+                        
                     </Switch>
                 </AnimatePresence>
             </Container>
