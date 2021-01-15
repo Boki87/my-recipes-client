@@ -5,6 +5,7 @@ import {AnimatePresence, motion} from 'framer-motion'
 import Nav from './components/nav/Nav'
 import Home from './pages/Home'
 import Recipe from './pages/Recipe'
+import Profile from './pages/Profile'
 import {Container} from './styles/Container'
 
 const pageVariants = {
@@ -49,6 +50,17 @@ const Routing = () => {
                                 variants={pageVariants}
                             >
                                 <Recipe />
+                            </motion.div>
+                            
+                        </Route>
+                        <Route exact path='/profile'>
+                            <motion.div
+                                initial="initial"
+                                animate="in"
+                                exit="out"
+                                variants={pageVariants}
+                            >
+                                <Profile />
                             </motion.div>
                             
                         </Route>

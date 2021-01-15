@@ -11,7 +11,7 @@ const ModalsProvider = ({children}) => {
         authType: 'login'
     })
 
-    const setAuthModal = (open, type) => {
+    const setAuthModal = (type, open) => {
         const stateCopy = {...state}
 
         stateCopy.showAuthModal = open

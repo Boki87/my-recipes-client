@@ -20,7 +20,7 @@ const AuthModal = ({show}) => {
     let {authType, setAuthModal} = useModalsContext()
 
     const closeModal = () => {
-        setAuthModal(false, 'login')
+        setAuthModal('login', false)
     }
 
     return (

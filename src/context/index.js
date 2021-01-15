@@ -1,15 +1,19 @@
 import React from 'react'
 import ModalsProvider, {useModalsContext} from './ModalsContext'
+import AuthProvider, {useAuthContext} from './AuthContext'
 
 export {
-    useModalsContext
+    useModalsContext,
+    useAuthContext
 }
 
 const CombinedContext = ({children}) => {
     return (
-        <ModalsProvider>
-            {children}
-        </ModalsProvider>
+        <AuthProvider>
+            <ModalsProvider>
+                {children}
+            </ModalsProvider>
+        </AuthProvider>
     )
 }
 

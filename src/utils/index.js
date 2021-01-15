@@ -27,10 +27,8 @@ export const apiCall = async (endpoint, {body, ...customConfig} = {}) => {
         config.body = JSON.stringify(body)
     }
 
-    const req = await fetch(`${process.env.REACT_APP_API_BACKEND_URL}${endpoint}`, config)
-    
-    const res = await req.json()
-    
+    const req = await fetch(`${process.env.REACT_APP_API_BACKEND_URL}${endpoint}`, config)    
+    const res = await req.json()    
     return res
     
 }

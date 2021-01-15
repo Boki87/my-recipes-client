@@ -1,12 +1,14 @@
-import React from 'react'
+import React, {useState} from 'react'
 import styled from 'styled-components'
+import {toast} from 'react-toastify'
 
 import {StyledInputGroup} from '../../styles/StyledInputGroup'
-import {StyledBtn} from '../../styles/StyledBtn'
+import Button from '../../ui/Button'
 
-import {useModalsContext} from '../../context'
+import {useModalsContext, useAuthContext} from '../../context'
+import {apiCall} from '../../utils'
 
-const StyledWrapper = styled.div`
+const StyledWrapper = styled.form`
 
     .forgotPassContainer {
         display: flex;
@@ -36,27 +38,71 @@ const StyledWrapper = styled.div`
 
 const Signup = () => {
 
+    const [name, setName] = useState('')
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [loading, setLoading] = useState(false)
+
+
     let {setAuthModal} = useModalsContext()
+    let {user, setUser} = useAuthContext()
+
+    const submitHandler = async (e) => {
+        e.preventDefault()        
+
+        if(name != '' && email == '' && password == '') {
+            return toast.error('Please fill all input fields')
+        }
+        setLoading(true)
+        const body = {name, email, password}
+        try {
+            const {success, token, error} = await apiCall('/auth/register', {body})  
+            if(success) {
+                localStorage.setItem('token', token)  
+            }else{
+                setLoading(false)    
+                localStorage.removeItem('token')  
+                return toast.error(error)                
+            }
+            
+        }catch(err) {                        
+            setLoading(false)    
+            return toast.error(err.message)                    
+        }
+
+        const {success, data} = await apiCall('/auth/me')
+
+        if(success) {
+            setUser(data)
+        }else{
+            setLoading(false)    
+            return toast.error('A invalid token provided')
+        }        
+
+        setLoading(false)            
+        setAuthModal('login', false)
+        return toast.success('Successful login')
+    }
 
     return (
-        <StyledWrapper>
+        <StyledWrapper onSubmit={submitHandler}>
             <h2>Sign Up</h2>
             <StyledInputGroup>
                 <label htmlFor="">Name</label>
-                <input type="text" placeholder='John Doe'/>
+                <input onInput={(e) => setName(e.target.value.trim())} type="text" placeholder='John Doe' value={name} required/>
             </StyledInputGroup>
             <StyledInputGroup>
                 <label htmlFor="">E-mail</label>
-                <input type="text" placeholder='john.doe@email.com'/>
+                <input onInput={(e) => setEmail(e.target.value.trim())} type="text" placeholder='john.doe@email.com' value={email} required/>
             </StyledInputGroup>
             <StyledInputGroup>
                 <label htmlFor="">Password</label>
-                <input type="password" placeholder='******'/>
+                <input onInput={(e) => setPassword(e.target.value.trim())} type="password" placeholder='******' required value={password}/>
             </StyledInputGroup>
 
-            <StyledBtn style={{margin: '20px auto'}}>SignUp</StyledBtn>
+            <Button style={{margin: '20px auto'}} loading={loading}>SignUp</Button>
 
-            <div className='bottom'>Already have an account? <a onClick={() => setAuthModal(true, 'login')}>Login!</a></div>
+            <div className='bottom'>Already have an account? <a onClick={() => setAuthModal('login', true)}>Login!</a></div>
         </StyledWrapper>
     )
 }

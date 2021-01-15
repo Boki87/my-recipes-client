@@ -34,9 +34,9 @@ const Modal = ({show, onClose, children}) => {
                     <motion.div
                         key='modal-content'
                         className='modal-content'
-                        initial={{opacity: 0, y:30}}
+                        initial={{opacity: 0, y:-40}}
                         animate={{opacity:1, y:0}}
-                        exit={{opacity: 0, y:30}}
+                        exit={{opacity: 0, y:-40}}
                         onClick={e => e.stopPropagation()}
                     >
                         {children}

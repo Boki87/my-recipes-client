@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, {css} from 'styled-components'
 
 export const StyledBtn = styled.button`
 
@@ -13,4 +13,17 @@ export const StyledBtn = styled.button`
     display: flex;
     align-items: center;
     justify-content: center;
+    @keyframes spinner {
+        to {transform: rotate(-360deg)}
+    }
+
+    .material-icons {
+        animation: spinner 1s linear infinite;
+    }
+    ${(props) => props.disabled && 
+        css`
+            background: ${({theme}) => theme.secondaryColor};
+            cursor: not-allowed;            
+        `
+    }
 `

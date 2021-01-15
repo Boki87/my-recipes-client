@@ -5,7 +5,7 @@ import {apiCall} from '../utils'
 import CategoryFilter from '../components/categoryFilter/CategoryFilter'
 import RecipeCard from '../components/RecipeCard'
 
-import {useModalsContext} from '../context'
+import {useModalsContext, useAuthContext} from '../context'
 
 const StyledRecipesWrapper = styled.div`
     display: flex;
@@ -30,6 +30,7 @@ const Home = () => {
     const [recipes, setRecipes] = useState([])
 
     let {setAuthModal} = useModalsContext()
+    let {user} = useAuthContext()
 
     useEffect( () => {
 
@@ -43,11 +44,13 @@ const Home = () => {
 
     return (
         <div>
-            <StyledHeader>
-                <p>Welcome to <span className='font2 brand'>My Recipes</span></p>
-                <p>Explore below a wast collection of user submitted recipes.</p>
-                <p>To submit your own <span onClick={() => setAuthModal(true, 'login')} className='link'>Login</span> or <span onClick={() => setAuthModal(true, 'signup')} className='link'>SignUp</span> if you don't have an account.</p>
-            </StyledHeader>
+            {!user &&  
+                <StyledHeader>
+                    <p>Welcome to <span className='font2 brand'>My Recipes</span></p>
+                    <p>Explore below a wast collection of user submitted recipes.</p>
+                    <p>To submit your own <span onClick={() => setAuthModal('login', true)} className='link'>Login</span> or <span onClick={() => setAuthModal('signup', true)} className='link'>SignUp</span> if you don't have an account.</p>
+                </StyledHeader>
+            }
 
             <CategoryFilter />
 
