@@ -1,12 +1,12 @@
 import React, {useState} from 'react'
 import styled from 'styled-components'
+import {toast} from 'react-toastify'
+
 import AdminLayout from '../components/adminLayout/AdminLayout'
 import Button from '../ui/Button'
-
 import {StyledInputGroup} from '../styles/StyledInputGroup'
-
 import {useAuthContext} from '../context'
-
+import {apiCall} from '../utils'
 
 const StyledForm = styled.form`
     width: 100%;
@@ -20,7 +20,7 @@ const StyledForm = styled.form`
 
 const Profile = () => {
 
-    const {user} = useAuthContext()
+    const {user, setUser} = useAuthContext()
 
     const [userDetails, setUserDetils] = useState({...user})
     
@@ -29,10 +29,43 @@ const Profile = () => {
     const [loading, setLoading] = useState(false)
 
 
-    const submitHandler = (e) => {
+    const submitHandler = async (e) => {
         e.preventDefault()
 
+        if(userDetails.email == '' && userDetails.name == '') {
+            return toast.error('Please enter name and email')
+        }
+
+        setLoading(true)
+
+        const body = {name: userDetails.name, email:userDetails.email}
+        try{
+            const updatedUser = await apiCall('/auth/updatedetails', {body, method: 'PUT'})
+            if(updatedUser.success) {
+                console.log(JSON.stringify(updatedUser));
+                localStorage.setItem('user', JSON.stringify(updatedUser.data))
+                setUser(updatedUser.data)
+            }else{
+                setLoading(false)
+                return toast.error('Could not update user details')
+            }
+
+            if(currentPassword != '' && newPassword != '') {
+                    const updatedPassword = await apiCall('/auth/updatepassword', {body:{currentPassword, newPassword},method: 'PUT'})
         
+                    if(updatedPassword.success) {
+                        localStorage.setItem('token', updatedPassword.token) 
+                    }else{
+                        setLoading(false)
+                        return toast.error('Current password is incorrect')
+                    }
+            }
+
+            setLoading(false)
+        }catch(err) {
+            setLoading(false)
+            return toast.error(err.message)
+        }
     }
 
     return (
@@ -41,11 +74,11 @@ const Profile = () => {
             <StyledForm onSubmit={submitHandler}>    
                 <StyledInputGroup>
                     <label>Name</label>
-                    <input type='text' value={userDetails.name} onInput={(e) => setUserDetils({...userDetails, name: e.target.value.trim()})} required/>
+                    <input type='text' value={userDetails.name} onInput={(e) => setUserDetils({...userDetails, name: e.target.value})} required/>
                 </StyledInputGroup>
                 <StyledInputGroup>
                     <label>Email</label>
-                    <input type='email' value={userDetails.email} onInput={(e) => setUserDetils({...userDetails, email: e.target.value.trim()})} required/>
+                    <input type='email' value={userDetails.email} onInput={(e) => setUserDetils({...userDetails, email: e.target.value})} required/>
                 </StyledInputGroup>
                 <StyledInputGroup>
                     <label>Current Password</label>

@@ -41,7 +41,7 @@ const AdminNavigation = () => {
         <StyledWrapper>
             <NavLink to='/profile' className='admin_nav_link' activeClassName='active'>Profile</NavLink>
             <NavLink to='/my-recipes' className='admin_nav_link' activeClassName='active'>My Recipes</NavLink>
-            <NavLink to='/favourites' className='admin_nav_link' activeClassName='active'>Favourites</NavLink>            
+            <NavLink to='/favorites' className='admin_nav_link' activeClassName='active'>Favorites</NavLink>            
         </StyledWrapper>
     )
 }

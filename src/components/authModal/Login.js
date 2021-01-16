@@ -94,11 +94,11 @@ const Login = () => {
             <h2>Login</h2>
             <StyledInputGroup>
                 <label htmlFor="">E-mail</label>
-                <input onInput={(e) => setEmail(e.target.value.trim())} type="text" placeholder='john.doe@email.com' value={email} required/>
+                <input onInput={(e) => setEmail(e.target.value)} type="text" placeholder='john.doe@email.com' value={email} required/>
             </StyledInputGroup>
             <StyledInputGroup>
                 <label htmlFor="">Password</label>
-                <input onInput={(e) => setPassword(e.target.value.trim())} type="password" placeholder='******' required value={password}/>
+                <input onInput={(e) => setPassword(e.target.value)} type="password" placeholder='******' required value={password}/>
             </StyledInputGroup>
 
             <div className='forgotPassContainer'>

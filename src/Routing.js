@@ -7,7 +7,7 @@ import Home from './pages/Home'
 import Recipe from './pages/Recipe'
 import Profile from './pages/Profile'
 import MyRecipes from './pages/MyRecipes'
-import Favourites from './pages/Favourites'
+import Favorites from './pages/Favorites'
 
 import {Container} from './styles/Container'
 
@@ -80,14 +80,14 @@ const Routing = () => {
                                     {/* </motion.div> */}
                                     
                                 </PrivateRoute>
-                                <PrivateRoute path='/favourites'>
+                                <PrivateRoute path='/favorites'>
                                     {/* <motion.div
                                         initial="initial"
                                         animate="in"
                                         exit="out"
                                         variants={pageVariants}
                                     > */}
-                                        <Favourites />
+                                        <Favorites />
                                     {/* </motion.div> */}
                                     
                                 </PrivateRoute>

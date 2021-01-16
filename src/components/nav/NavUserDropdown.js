@@ -103,6 +103,22 @@ const NavUserDropdown = () => {
                                     <p>Profile</p>
                                 </Link>
                             </DropdownItemWrapper>
+                            <DropdownItemWrapper onClick={closeMe}>
+                                <Link to='/my-recipes' className='dropdown_item'>
+                                    <span className="material-icons">
+                                        book
+                                    </span>
+                                    <p>My Recipes</p>
+                                </Link>
+                            </DropdownItemWrapper>
+                            <DropdownItemWrapper onClick={closeMe}>
+                                <Link to='/favorites' className='dropdown_item'>
+                                    <span className="material-icons">
+                                        stars
+                                    </span>
+                                    <p>Favorites</p>
+                                </Link>
+                            </DropdownItemWrapper>
 
                             <DropdownItemWrapper onClick={closeMe}>
                                 <div onClick={logout} className='dropdown_item'>
