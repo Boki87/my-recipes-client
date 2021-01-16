@@ -1,10 +1,12 @@
 import React from 'react'
+import AdminLayout from '../components/adminLayout/AdminLayout'
 
 const Profile = () => {
     return (
-        <div>
+        <AdminLayout>
+            
             Profile
-        </div>
+        </AdminLayout>
     )
 }
 

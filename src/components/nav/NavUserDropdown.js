@@ -27,7 +27,7 @@ const StyledAvatarMenu = styled.div`
         background: ${({theme}) => theme.bgPrimary};
         border-radius: 4px;
         border: 1px solid ${({theme}) => theme.bgSecondary};        
-
+        z-index: 20;
         .dropdown_item {
             color: ${({theme}) => theme.textPrimary};
             cursor: pointer;

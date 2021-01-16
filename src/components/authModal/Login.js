@@ -74,6 +74,7 @@ const Login = () => {
         const {success, data} = await apiCall('/auth/me')
 
         if(success) {
+            localStorage.setItem('user', JSON.stringify(data))
             setUser(data)
         }else{
             setLoading(false)  

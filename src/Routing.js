@@ -31,44 +31,46 @@ const Routing = () => {
             <>
             <Nav/>
             <Container style={{height:'calc(100vh - 55px)', margin: '0 auto', overflow:'auto'}}>
-                <AnimatePresence exitBeforeEnter>
-                    <Switch location={location} key={location.pathname}>
-                        <Route exact path='/'>
-                            <motion.div
-                                initial="initial"
-                                animate="in"
-                                exit="out"
-                                variants={pageVariants}
-                            >
-                                <Home />
-                            </motion.div>
-                        </Route>
-                        <Route exact path='/recipe/:id'>
-                            <motion.div
-                                initial="initial"
-                                animate="in"
-                                exit="out"
-                                variants={pageVariants}
-                            >
-                                <Recipe />
-                            </motion.div>
-                            
-                        </Route>
-                        
-                            <PrivateRoute path='/profile'>
-                                <motion.div
+                {/* <Route render={({location}) => ( */}
+                    {/* <AnimatePresence exitBeforeEnter> */}
+                        <Switch location={location} key={location.pathname}>
+                            <Route exact path='/'>
+                                {/* <motion.div
                                     initial="initial"
                                     animate="in"
                                     exit="out"
                                     variants={pageVariants}
-                                >
-                                    <Profile />
-                                </motion.div>
+                                > */}
+                                    <Home />
+                                {/* </motion.div> */}
+                            </Route>
+                            <Route exact path='/recipe/:id'>
+                                {/* <motion.div
+                                    initial="initial"
+                                    animate="in"
+                                    exit="out"
+                                    variants={pageVariants}
+                                > */}
+                                    <Recipe />
+                                {/* </motion.div> */}
                                 
-                            </PrivateRoute>
-                        
-                    </Switch>
-                </AnimatePresence>
+                            </Route>
+                            
+                                <PrivateRoute path='/profile'>
+                                    {/* <motion.div
+                                        initial="initial"
+                                        animate="in"
+                                        exit="out"
+                                        variants={pageVariants}
+                                    > */}
+                                        <Profile />
+                                    {/* </motion.div> */}
+                                    
+                                </PrivateRoute>
+                            
+                        </Switch>
+                     {/* </AnimatePresence>
+                )} /> */}
             </Container>
         </>
     )
