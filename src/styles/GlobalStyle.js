@@ -56,6 +56,11 @@ html {
 		text-decoration: underline;
 		cursor: pointer;
 	}
+
+	.Toastify__toast {
+		border-radius: 8px;
+	}
+
 `;
 
 export default GlobalStyle

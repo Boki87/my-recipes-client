@@ -1,25 +1,18 @@
 import styled from 'styled-components'
 
+import AdminNavigsation from './AdminNavigsation'
+
 const StyledWrapper = styled.div`
     padding-top: 60px;
     height:100%;
-    position: relative;
-    .admin_navigation {
-        position: absolute;
-        top:0px;
-        left:0px;
-        width:100%;
-        height:60px;
-        background: ${({theme}) => theme.bgPrimary};
-        z-index: 10;
-    }
+    position: relative;    
     
 `
 
 const AdminLayout = ({children}) => {
     return (
         <StyledWrapper>
-                <div className='admin_navigation'></div>
+                <AdminNavigsation />
                 {children}
         </StyledWrapper>
     )

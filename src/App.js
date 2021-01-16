@@ -22,7 +22,9 @@ function App() {
       <Routing/>
 
       <AuthModal show={showAuthModal}/>
-      <ToastContainer/>
+      <ToastContainer 
+        autoClose={1500}
+      />
     </ThemeProvider>
   );
 }

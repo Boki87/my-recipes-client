@@ -6,6 +6,8 @@ import Nav from './components/nav/Nav'
 import Home from './pages/Home'
 import Recipe from './pages/Recipe'
 import Profile from './pages/Profile'
+import MyRecipes from './pages/MyRecipes'
+import Favourites from './pages/Favourites'
 
 import {Container} from './styles/Container'
 
@@ -64,6 +66,28 @@ const Routing = () => {
                                         variants={pageVariants}
                                     > */}
                                         <Profile />
+                                    {/* </motion.div> */}
+                                    
+                                </PrivateRoute>
+                                <PrivateRoute path='/my-recipes'>
+                                    {/* <motion.div
+                                        initial="initial"
+                                        animate="in"
+                                        exit="out"
+                                        variants={pageVariants}
+                                    > */}
+                                        <MyRecipes />
+                                    {/* </motion.div> */}
+                                    
+                                </PrivateRoute>
+                                <PrivateRoute path='/favourites'>
+                                    {/* <motion.div
+                                        initial="initial"
+                                        animate="in"
+                                        exit="out"
+                                        variants={pageVariants}
+                                    > */}
+                                        <Favourites />
                                     {/* </motion.div> */}
                                     
                                 </PrivateRoute>
