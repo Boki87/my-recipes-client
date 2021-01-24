@@ -23,7 +23,7 @@ function App() {
 
       <AuthModal show={showAuthModal}/>
       <ToastContainer 
-        autoClose={1500}
+        autoClose={2000}
       />
     </ThemeProvider>
   );

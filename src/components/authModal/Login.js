@@ -53,7 +53,7 @@ const Login = () => {
             return toast.error('Please enter email and password')
         }
         setLoading(true)
-        const body = {email, password}
+        const body = JSON.stringify({email, password})
         try {
             const {success, token} = await apiCall('/auth/login', {body})  
             console.log({success, token});

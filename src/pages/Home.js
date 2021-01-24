@@ -1,17 +1,26 @@
 import {useEffect, useState} from 'react'
 import styled from 'styled-components'
-import {apiCall} from '../utils'
-import {Route, Redirect} from 'react-router-dom'
 
 import CategoryFilter from '../components/categoryFilter/CategoryFilter'
 import RecipeCard from '../components/RecipeCard'
 
-import {useModalsContext, useAuthContext} from '../context'
+import {useModalsContext, useAuthContext, useRecipeContext} from '../context'
 
 const StyledRecipesWrapper = styled.div`
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;    
+    justify-content: center;   
+
+    @keyframes spinner {
+        to {transform: rotate(-360deg)}
+    }
+
+    .loader {
+        animation: spinner 1.5s linear infinite;
+        font-size: 3rem;
+        color: ${({theme}) => theme.primaryColor};
+    }
+
 `
 
 const StyledHeader = styled.div`
@@ -28,18 +37,12 @@ const StyledHeader = styled.div`
 
 const Home = () => {
 
-    const [recipes, setRecipes] = useState([])
+    const {recipes, getRecipes, recipesLoading} = useRecipeContext()
 
     let {setAuthModal} = useModalsContext()
     let {user} = useAuthContext()
 
     useEffect( () => {
-
-        async function getRecipes() {
-            const res = await apiCall('/recipes')
-            setRecipes(res.data)
-            console.log(res.data);
-        }
         getRecipes()
     }, [])
 
@@ -55,8 +58,18 @@ const Home = () => {
 
             <CategoryFilter />
 
+
+            
+
             <StyledRecipesWrapper>
-                {recipes && recipes.map(recipe => 
+
+                {recipesLoading && 
+                    <span className="material-icons loader">
+                        cached
+                    </span>
+                }
+
+                {!recipesLoading && recipes && recipes.map(recipe => 
                     <RecipeCard 
                         recipe={recipe}
                         key={recipe._id}

@@ -1,5 +1,7 @@
 import styled from 'styled-components'
-import {Link} from 'react-router-dom'
+import {Link, useLocation} from 'react-router-dom'
+
+import {useRecipeContext, useAuthContext, useModalsContext} from '../context'
 
 import ClockIcon from '../assets/icons/clock.svg'
 import PlateIcon from '../assets/icons/plate.svg'
@@ -24,7 +26,7 @@ const StyledRecipeCard = styled.div`
         display:flex;
         align-items: center;
         justify-content: center;
-        background: ${({theme}) => theme.bgSecondary};
+        background: ${({theme}) => theme.secondaryColor};
         color: ${({theme}) => theme.textSecondary};
     }
 
@@ -105,21 +107,30 @@ const RecipeCard = ({
     recipe,
     style = {}
 }) => {
-
+    
     const {
         category,
         photo,
         name,
         preparationTime,
-        numberOfServings
-
+        numberOfServings        
     } = recipe
 
+    let location = useLocation()
+    const {setNewRecipeModal} = useModalsContext()
+    const {setRecipeToEdit} = useRecipeContext()
+    
+
+    const openEditModal = (id) => {
+        setRecipeToEdit(id)
+        setNewRecipeModal('Update', true)
+    }
+    
     return (
         <StyledRecipeCard style={style}>
             <div className='recipe_image'>
                 {photo && photo != 'no-photo.jpg' ?
-                    <img src={`${process.env.REACT_APP_API}/uploads/${photo}`} alt=""/> :
+                    <img src={`${process.env.REACT_APP_API}/uploads/${photo}?${+new Date()}`} alt=""/> :
                     <div>
                         No Image Available
                     </div>
@@ -127,12 +138,20 @@ const RecipeCard = ({
             </div>
             <div className='recipe_body'>
 
-                <Link to={`/recipe/${recipe._id}`} className='open_btn'>
-                    <span className="material-icons">
-                        launch
-                    </span>
-                </Link>
-
+                {location.pathname == '/' ? 
+                    <Link to={`/recipe/${recipe._id}`} className='open_btn'>
+                        <span className="material-icons">
+                            launch
+                        </span>
+                    </Link>
+                    :
+                    <div onClick={() => openEditModal(recipe._id)} className='open_btn'>
+                        <span className="material-icons">
+                            launch
+                        </span>
+                    </div>
+                }
+                
 
                 <div className='name'>{name}</div>
                 <div className='category'>{category.name}</div>

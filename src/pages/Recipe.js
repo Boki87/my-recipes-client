@@ -8,6 +8,7 @@ import {apiCall} from '../utils'
 import ClockIcon from '../assets/icons/clock.svg'
 import PlateIcon from '../assets/icons/plate.svg'
 
+import ParseEditorJs from '../components/ParseEditorJs'
 
 const StyledRecipeHeader = styled.div`
     display:flex;
@@ -103,6 +104,14 @@ const StyledInstructions = styled.div`
     margin: 20px 0px;
     position: relative;
     padding: 30px 20px 20px 20px;
+
+    ol {
+        margin: 10px 10px 10px 40px;
+    }
+
+    ul {
+        margin: 10px 10px 10px 40px;
+    }
 `
 
 TimeAgo.addDefaultLocale(en)
@@ -112,7 +121,7 @@ const Recipe = () => {
 
     var {id} = useParams()
 
-    const [recipe, setRecipe] = useState({})
+    const [recipe, setRecipe] = useState(null)
 
     useEffect(() => {
         
@@ -127,6 +136,8 @@ const Recipe = () => {
 
     return (
         <div>
+            {recipe && 
+            <>
             <StyledRecipeHeader>
                 <div className='image_container'>
                     {recipe.photo && recipe.photo != 'no-photo.jpg' ?
@@ -163,8 +174,12 @@ const Recipe = () => {
 
             <StyledInstructions style={{marginTop:'40px'}}>
                 <StyledSectionTitle>Instructions</StyledSectionTitle>
-                <div dangerouslySetInnerHTML={{__html: recipe.preparationDescription}}></div>
+                {recipe.preparationDescription != '' && 
+                    <ParseEditorJs data={recipe.preparationDescription}/>                
+                }
             </StyledInstructions>
+            </>
+            }
         </div>
     )
 }

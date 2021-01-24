@@ -6,26 +6,44 @@ export const useModalsContext = () => useContext(ModalsContext)
 
 const ModalsProvider = ({children}) => {
 
-    const [state, setState] = useState({
+    const [authModal, setAuthModal] = useState({
         showAuthModal: false,
         authType: 'login'
     })
 
-    const setAuthModal = (type, open) => {
-        const stateCopy = {...state}
+    const [newRecipeModal, setNewRecipeModal] = useState({
+        showNewRecipeModal: false,
+        newRecipeModalState: 'Add' //or Update
+    })
 
-        stateCopy.showAuthModal = open
-        stateCopy.authType = type
 
-        setState(stateCopy)
+    const setAuthModalState = (type, open) => {
+        const authModalCopy = {...authModal}
+
+        authModalCopy.showAuthModal = open
+        authModalCopy.authType = type
+
+        setAuthModal(authModalCopy)
     }
     
+    const setNewRecipeModalState = (state = 'Add', isOpen) => {
+        let stateCopy = {...newRecipeModal}
+        stateCopy.showNewRecipeModal = isOpen
+        stateCopy.newRecipeModalState = state
+
+        setNewRecipeModal(stateCopy)
+    }
     
     return (
         <ModalsContext.Provider value={{
-            showAuthModal: state.showAuthModal,
-            authType: state.authType,
-            setAuthModal
+            showAuthModal: authModal.showAuthModal,
+            authType: authModal.authType,
+            setAuthModal: setAuthModalState,
+
+            showNewRecipeModal: newRecipeModal.showNewRecipeModal,
+            setNewRecipeModal: setNewRecipeModalState,
+            newRecipeModalState: newRecipeModal.newRecipeModalState
+
         }}>
             {children}
         </ModalsContext.Provider>

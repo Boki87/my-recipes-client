@@ -20,11 +20,11 @@ export const apiCall = async (endpoint, {body, ...customConfig} = {}) => {
         headers: {
             ...headers,
             ...customConfig.headers
-        }
+        }        
     }
 
     if(body) {
-        config.body = JSON.stringify(body)
+        config.body = body
     }
 
     const req = await fetch(`${process.env.REACT_APP_API_BACKEND_URL}${endpoint}`, config)    
@@ -34,11 +34,11 @@ export const apiCall = async (endpoint, {body, ...customConfig} = {}) => {
 }
 
 
-export const categories = [
-    {title: "Soup", icon : SoupIcon},
-    {title: "Salad", icon : SaladIcon},
-    {title: "Main course", icon : MainCourseIcon},
-    {title: "Dessert", icon : DessertIcon},
-    {title: "Breakfast", icon : BreakfastIcon},
-    {title: "Beverage", icon : BeverageIcon},
-]
+export const categoriesIcons = {
+    "Soup" : SoupIcon,
+    "Salad" : SaladIcon,
+    "Main course" : MainCourseIcon,
+    "Dessert" : DessertIcon,
+    "Breakfast" : BreakfastIcon,
+    "Beverage" : BeverageIcon,
+}

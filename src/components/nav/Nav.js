@@ -1,10 +1,14 @@
-import {Link} from 'react-router-dom'
+import {useState, useEffect} from 'react'
+import {Link, useLocation} from 'react-router-dom'
 import styled from 'styled-components'
 
 import Logo from '../../assets/icons/restaurant.svg'
 import NavUserDropdown from './NavUserDropdown'
 
 import {Container} from '../../styles/Container'
+
+import {useRecipeContext} from '../../context'
+
 
 const NavWrapper = styled.nav`
     background: ${(props) => props.theme.bgPrimary};
@@ -57,6 +61,31 @@ const StyledSearch = styled.div`
 
 
 const Nav = () => {
+
+    let location = useLocation()
+
+    let {setNameQuery} = useRecipeContext()
+
+    let [searchQuery, setSearchQuery] = useState('')
+
+
+    useEffect(() => {
+
+        const timer = setTimeout(() => {
+            searchHandler()
+        }, 1000)
+
+        return () => clearTimeout(timer)
+    }, [searchQuery])
+    
+
+    const searchHandler = () => {
+        
+        if(location.pathname == '/') {        
+            setNameQuery(searchQuery)            
+        }
+    }
+
     return (
         <NavWrapper>
             <Container style={{display:'flex', alignItems:'center', height:'100%'}}>
@@ -66,7 +95,7 @@ const Nav = () => {
                 </StyledLogo>
 
                 <StyledSearch>
-                    <input type="search" placeholder='Search recipe...'/>
+                    <input type="search" onInput={(e) => setSearchQuery(e.target.value)} placeholder='Search recipe...'/>
 
                     <span className="material-icons">
                         search

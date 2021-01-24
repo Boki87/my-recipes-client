@@ -1,8 +1,11 @@
-import styled from 'styled-components'
-import {categories} from '../../utils'
+import React, {useEffect, useState} from 'react'
+import styled, {css} from 'styled-components'
+import {categoriesIcons} from '../../utils'
 
+import {apiCall} from '../../utils'
+import {useRecipeContext} from '../../context'
 
-const StyledCatBtn = styled.div`
+export const StyledCatBtn = styled.div`
     width: 60px;
     height: 60px;
     border-radius: 50%;
@@ -15,12 +18,16 @@ const StyledCatBtn = styled.div`
     img {
         height: 50px;
     }
+    ${(props) => props.active && props.active == props.id && 
+        css`            
+            background: ${({theme}) => theme.secondaryColor};
+        `
+    }
 `
 
-const CategoryBtn = ({title, icon}) => {
-
+export const CategoryBtn = ({id, icon, active, onClick}) => {    
     return (
-        <StyledCatBtn>
+        <StyledCatBtn onClick={onClick} active={active} id={id}>
             <img src={icon} alt=""/>
         </StyledCatBtn>
     )
@@ -34,6 +41,7 @@ const StyledCategoryFilterWrapper = styled.div`
     justify-content: center;
     align-items: center;
     margin-bottom: 20px;
+   
 `
 
 const StyledH = styled.div`    
@@ -44,13 +52,37 @@ const StyledH = styled.div`
 `
 
 const CategoryFilter = () => {
+
+    const [categories, setCategories] = useState([])
+
+    const [selectedCat, setSelectedCat] = useState('')
+
+    const setCategory = (id) => {
+        if(selectedCat == id) {
+            setSelectedCat(null)
+        }else{
+            setSelectedCat(id)
+        }
+    }
+
+    useEffect(() => {
+        async function getCategories() {
+            let res = await apiCall('/categories')
+            
+            if(res.success) {
+                setCategories(res.data)
+            }
+        }
+        getCategories()
+    }, [])
+
     return (
         <>
             <StyledH>Filter by category</StyledH>
             <StyledCategoryFilterWrapper>
                 
                 {categories.map(cat => 
-                    <CategoryBtn title={cat.title} icon={cat.icon} key={`iconBtn${cat.title.split(" ").join('_')}`}/>
+                    <CategoryBtn title={cat.name} active={selectedCat} onClick={() => setCategory(cat._id)} id={cat._id} icon={categoriesIcons[cat.name]} key={`iconBtn${cat.name.split(" ").join('_')}`}/>
                 )}
             </StyledCategoryFilterWrapper>
         </>

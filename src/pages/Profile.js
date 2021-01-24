@@ -38,7 +38,7 @@ const Profile = () => {
 
         setLoading(true)
 
-        const body = {name: userDetails.name, email:userDetails.email}
+        const body = JSON.stringify({name: userDetails.name, email:userDetails.email})
         try{
             const updatedUser = await apiCall('/auth/updatedetails', {body, method: 'PUT'})
             if(updatedUser.success) {

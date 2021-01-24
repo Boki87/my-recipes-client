@@ -54,7 +54,7 @@ const Signup = () => {
             return toast.error('Please fill all input fields')
         }
         setLoading(true)
-        const body = {name, email, password}
+        const body = JSON.stringify({name, email, password})
         try {
             const {success, token, error} = await apiCall('/auth/register', {body})  
             if(success) {

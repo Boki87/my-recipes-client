@@ -11,7 +11,8 @@ const StyledModal = styled.div`
     background: rgba(0,0,0,0.6);
     z-index: 100;
     display: flex;
-
+    overflow: auto;
+    
     .modal-content {
         background: ${({theme}) => theme.bgPrimary};
         border-radius: 8px;
