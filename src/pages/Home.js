@@ -76,6 +76,11 @@ const Home = () => {
                     />
                 )}
                 
+                {
+                    !recipesLoading && recipes && recipes.length == 0 && 
+                    <p>No Recipes found</p>
+                }
+                
             </StyledRecipesWrapper>
         </div>
     )

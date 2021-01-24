@@ -57,11 +57,16 @@ const CategoryFilter = () => {
 
     const [selectedCat, setSelectedCat] = useState('')
 
+
+    const {setCategoryQuery} = useRecipeContext()
+
     const setCategory = (id) => {
         if(selectedCat == id) {
-            setSelectedCat(null)
+            setSelectedCat('')
+            setCategoryQuery('')
         }else{
             setSelectedCat(id)
+            setCategoryQuery(id)
         }
     }
 
