@@ -11,8 +11,14 @@ import {apiCall} from '../../utils'
 const StyledHeader = styled.div`
     display:flex;
     justify-content: space-between;
+    flex-wrap: wrap;
 
-    .image_container {
+    .inputs_container {
+        max-width: 500px;
+        min-width: 300px;        
+    }
+
+    .image_container {        
         width: 200px;
         height:200px;
         border-radius: 12px;
@@ -49,6 +55,14 @@ const StyledHeader = styled.div`
         }
     }
 
+    @media screen and (max-width: 799px) {
+        .inputs_container {
+            order: 2;        
+        }
+
+        .image_container {   
+            order: 1;
+        }
 `
 
 const RecipeModalHeader = ({name, photo, category, preparationTime, numberOfServings, changeHandler, setPhoto}) => {
@@ -71,6 +85,7 @@ const RecipeModalHeader = ({name, photo, category, preparationTime, numberOfServ
     }
 
     useEffect(() => {
+        //getting photo from the api 
         if(photo != '' && typeof(photo) !== 'object') {
             if(photo.startsWith('http')) {
                 setPreviewPhoto(photo)
@@ -96,7 +111,7 @@ const RecipeModalHeader = ({name, photo, category, preparationTime, numberOfServ
     return (
         <StyledHeader>
 
-            <div style={{maxWidth: '500px'}}>
+            <div className='inputs_container'>
                 <StyledInputGroup>
                     <label htmlFor="">Name</label>
                     <input type="text" placeholder='Some Awesome Recipe Name' value={name} onChange={(e) => changeHandler('name', e.target.value)} style={{width:'300px'}} required/>

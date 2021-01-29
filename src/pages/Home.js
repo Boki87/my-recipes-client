@@ -16,6 +16,7 @@ const StyledWrapper = styled.div`
         list-style: none;
         justify-content: center;
         margin-top: 30px;
+        margin-bottom:50px;
         li {
             width: 30px;
             height:30px;            
@@ -152,7 +153,7 @@ const Home = () => {
                                 
             </StyledRecipesWrapper>
             
-                <ReactPaginate                     
+                <ReactPaginate                            
                         onPageChange={paginationClickHandler}
                         previousLabel={<span className="material-icons">navigate_before</span>}
                         nextLabel={<span className="material-icons">keyboard_arrow_right</span>}

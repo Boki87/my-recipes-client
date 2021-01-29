@@ -16,25 +16,26 @@ const StyledWrapper = styled.div`
             height:40px;
             width:150px;            
             border-bottom: 3px solid transparent;
-            background: ${({theme}) => theme.secondaryColor};
-            color: ${({theme}) => theme.textSecondary};
+            background: ${({theme}) => theme.primaryColor};
+            color: ${({theme}) => theme.bgPrimary};            
             display:flex;
             justify-content:center;
             align-items:center;
             margin: 0px 5px;            
             border-top-left-radius: 4px;
             border-top-right-radius: 4px;
+            font-size: 0.8rem;
             &:hover {
                 filter: brightness(90%);
             }
 
             .material-icons {
-                margin-right: 10px;
+                margin-right: 7px;
             }
         }
 
         .active {
-            border-bottom: 3px solid ${({theme}) => theme.primaryColor};
+            border-bottom: 3px solid ${({theme}) => theme.secondaryColor};
             background: ${({theme}) => theme.secondaryColor}; 
         }
 `

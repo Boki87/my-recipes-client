@@ -8,10 +8,10 @@ import {apiCall} from '../../utils'
 import {useRecipeContext} from '../../context'
 
 export const StyledCatBtn = styled.div`
-    width: 60px;
+    min-width: 60px;
     height: 60px;
     border-radius: 50%;
-    margin: 0px 10px;
+    margin: 5px 10px;
     background: ${({theme}) => theme.primaryColor};
     display: flex;
     justify-content: center;
@@ -37,9 +37,10 @@ export const CategoryBtn = ({id, icon, active, onClick}) => {
 
 
 const StyledCategoryFilterWrapper = styled.div`
-    height: 60px;
+    min-height: 60px;
     width: 100%;
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     align-items: center;
     margin-bottom: 20px;

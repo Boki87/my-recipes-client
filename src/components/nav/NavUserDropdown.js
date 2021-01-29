@@ -52,6 +52,12 @@ const StyledAvatarMenu = styled.div`
         
     }
 
+    @media screen and (max-width: 500px) {
+        width: 30px;
+        .user_name {
+            display: none;
+        }
+    }
 `
 
 function DropdownItemWrapper({children, onClick}) {
@@ -83,13 +89,11 @@ const NavUserDropdown = () => {
     return (
         <StyledAvatarMenu ref={wrapperRef}>
             <label onClick={() => setShowDropdown(!showDropdown)} htmlFor='checkDropdown' className='triggerBtn pointer'>
-                {user && <span style={{marginRight:'10px'}}>{user.name}</span>}
+                {user && <span className='user_name' style={{marginRight:'10px'}}>{user.name}</span>}
                 <span className="material-icons">
                     face
                 </span>
             </label>
-{/* 
-            <input type="checkbox" id='checkDropdown' name='checkDropdown' style={{display:'none'}}/> */}
 
             {showDropdown &&             
                 <div className='dropdown'>

@@ -18,7 +18,6 @@ const NavWrapper = styled.nav`
     display: flex;
     justify-content: center;
     align-items:center;
-
 `
 
 const StyledLogo = styled(Link)`
@@ -32,7 +31,18 @@ const StyledLogo = styled(Link)`
         margin-right: 10px;
     }
 
+    @media screen and (max-width: 500px) {
+        margin-left: 5px;
+        
+        span {
+            display: none;
+        }   
 
+        img {
+            height: 50%;        
+            margin-right: 10px;
+        }     
+    }
 `
 const StyledSearch = styled.div`
 
@@ -101,7 +111,7 @@ const Nav = () => {
             <Container style={{display:'flex', alignItems:'center', height:'100%'}}>
                 <StyledLogo to='/' className='font2'>
                     <img src={Logo} alt=""/>
-                    My Recipes
+                    <span>My Recipes</span>
                 </StyledLogo>
 
                 <StyledSearch>
