@@ -231,7 +231,9 @@ const Recipe = () => {
             <>
             <StyledRecipeHeader>
                 <div className='image_container'>
-                    <FavoritesIcon recipe={recipe} />
+                    {user && 
+                        <FavoritesIcon recipe={recipe} />
+                    }
                     {recipe.photo && recipe.photo != 'no-photo.jpg' ?
                         <img src={`${process.env.REACT_APP_API}/uploads/${recipe.photo}`} alt=""/> :
                         <span>
