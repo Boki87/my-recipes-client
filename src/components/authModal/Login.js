@@ -39,8 +39,8 @@ const StyledWrapper = styled.form`
 
 const Login = () => {
 
-    const [email, setEmail] = useState('admin@myrecipes.com')
-    const [password, setPassword] = useState('123456')
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
     const [loading, setLoading] = useState(false)
 
     let {setAuthModal} = useModalsContext()
