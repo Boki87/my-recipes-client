@@ -3,18 +3,28 @@ import styled from 'styled-components'
 import {useParams} from 'react-router-dom'
 import TimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en'
+import {toast} from 'react-toastify'
+
+import StarRating from '../components/StarRating'
 
 import {apiCall} from '../utils'
 import ClockIcon from '../assets/icons/clock.svg'
 import PlateIcon from '../assets/icons/plate.svg'
 
 import ParseEditorJs from '../components/ParseEditorJs'
+import {useAuthContext} from '../context'
+
+
+import FavoritesIcon from '../components/FavoritesIcon'
+
 
 const StyledRecipeHeader = styled.div`
     display:flex;
     flex-wrap: wrap;
     margin-top:30px;
     .image_container {
+
+        position: relative;
         width: 300px;
         min-width: 300px;
         height:300px;
@@ -121,18 +131,99 @@ const Recipe = () => {
 
     var {id} = useParams()
 
+    const {user} = useAuthContext()
+
     const [recipe, setRecipe] = useState(null)
+    const [rating, setRating] = useState(0)
+    const [ratingId, setRatingId] = useState(null)
 
     useEffect(() => {
         
         async function getRecipeData() {
-            const res = await apiCall(`/recipes/${id}`)         
-            setRecipe(res.data)
-            console.log(res.data);
+
+            try {
+                const res = await apiCall(`/recipes/${id}`)         
+
+                if(res.success) {
+
+                    const ratingRes = await apiCall(`/recipes/${res.data._id}/rating`)
+
+                    if(ratingRes.success) {
+                        setRating(ratingRes.data.rating)
+                        setRatingId(ratingRes.data._id)
+                    }else{
+                        setRating(0)
+                        setRatingId(null)
+                    }
+
+                    setRecipe(res.data)                 
+
+                }else{
+                    return toast.error('Something went wrong')
+                }
+
+
+            }catch(err) {
+                console.log(err);
+                return toast.error('Coldn\'t fetch data for recipe. Please refresh')
+            }
+                        
         }
         getRecipeData()
 
+
+
     }, [])
+
+    
+    const ratingChangeHandler = async (index) => {
+        
+        const options = {}
+        if(ratingId) {
+            options.method = 'PUT'
+            let body = JSON.stringify({
+                rating: index
+            })
+
+            options.body = body
+                        
+        }else{
+            options.method = 'POST'
+            let body = JSON.stringify({
+                rating: index,
+                user: user._id,
+                recipe: recipe._id
+            })
+
+            options.body = body
+        }
+
+        
+
+        try {            
+            const ratingRes = await apiCall(`/recipes/${recipe._id}/rating`, options)
+    
+            if(ratingRes.success) {
+                setRatingId(ratingRes.data._id)
+                setRating(ratingRes.data.rating)
+
+                //backend need a bit more tome to calculate average rating
+                // so giving it just a half a second breathing time 
+                setTimeout(async () => {
+                    const res = await apiCall(`/recipes/${id}`)
+                    if(res.success) {                    
+                        setRecipe(res.data)
+                    }
+                }, 500)
+            }else{
+                return toast.error('Could not set rating')    
+            }
+        }catch(err) {
+            return toast.error('Could not set rating')
+        }
+        
+    }    
+
 
     return (
         <div>
@@ -140,6 +231,7 @@ const Recipe = () => {
             <>
             <StyledRecipeHeader>
                 <div className='image_container'>
+                    <FavoritesIcon recipe={recipe} />
                     {recipe.photo && recipe.photo != 'no-photo.jpg' ?
                         <img src={`${process.env.REACT_APP_API}/uploads/${recipe.photo}`} alt=""/> :
                         <span>
@@ -160,8 +252,28 @@ const Recipe = () => {
                     </div>
                     <h1>{recipe.name}</h1>
                     <div>
-                        {recipe.createdAt && timeAgo.format(new Date(recipe.createdAt))}
+                        {recipe.createdAt && <span style={{fontWeight:'bold'}}>{timeAgo.format(new Date(recipe.createdAt))}</span>} by <span style={{textTransform:'capitalize', fontWeight: 'bold'}}>{recipe.user.name}</span>
                     </div>
+
+                    <div>
+                        {
+                            recipe.averageRating ? 
+                            <span>Average rating: {Math.round(recipe.averageRating)}</span>
+                            :
+                            <span>Not rated yet</span>
+                        }    
+                    </div>
+
+                    {user && recipe && user._id != recipe.user._id &&                         
+                        <div>
+                            <span>Your rating:</span>
+                            
+                                <StarRating 
+                                    rating={rating}
+                                    onChange={ratingChangeHandler}                           
+                                />
+                        </div>
+                    }
                 </div>
             </StyledRecipeHeader>
 

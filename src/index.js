@@ -6,11 +6,11 @@ import CombinedContext from './context'
 
 ReactDOM.render(
   <React.StrictMode>
-    <CombinedContext>
       <Router>
-        <App />
+        <CombinedContext>
+          <App />
+        </CombinedContext>
       </Router>
-    </CombinedContext>
   </React.StrictMode>,
   document.getElementById('root')
 );

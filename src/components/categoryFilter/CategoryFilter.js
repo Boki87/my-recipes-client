@@ -1,5 +1,7 @@
 import React, {useEffect, useState} from 'react'
-import styled, {css} from 'styled-components'
+import styled, {createGlobalStyle, css} from 'styled-components'
+import {useLocation} from 'react-router-dom'
+
 import {categoriesIcons} from '../../utils'
 
 import {apiCall} from '../../utils'
@@ -53,12 +55,26 @@ const StyledH = styled.div`
 
 const CategoryFilter = () => {
 
+    let location = useLocation()
+
     const [categories, setCategories] = useState([])
 
     const [selectedCat, setSelectedCat] = useState('')
 
 
     const {setCategoryQuery} = useRecipeContext()
+
+
+    let [route, setRoute] = useState('')
+
+    useEffect(() => {
+        //reset category query on route change
+        if(route != location.pathname) {            
+            setRoute(location.pathname)
+            setSelectedCat('')
+            setCategoryQuery('')            
+        }
+    }, [location.pathname])
 
     const setCategory = (id) => {
         if(selectedCat == id) {

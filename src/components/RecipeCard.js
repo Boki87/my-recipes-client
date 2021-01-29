@@ -3,6 +3,7 @@ import {Link, useLocation} from 'react-router-dom'
 
 import {useRecipeContext, useAuthContext, useModalsContext} from '../context'
 
+import StarRating from './StarRating'
 import ClockIcon from '../assets/icons/clock.svg'
 import PlateIcon from '../assets/icons/plate.svg'
 
@@ -138,7 +139,7 @@ const RecipeCard = ({
             </div>
             <div className='recipe_body'>
 
-                {location.pathname == '/' ? 
+                {location.pathname != '/my-recipes' ? 
                     <Link to={`/recipe/${recipe._id}`} className='open_btn'>
                         <span className="material-icons">
                             launch
@@ -166,23 +167,10 @@ const RecipeCard = ({
                         {numberOfServings}
                     </div>
                 </div>
-                <div className='rating'>
-                    <span className="material-icons">
-                        star
-                    </span>
-                    <span className="material-icons">
-                        star
-                    </span>
-                    <span className="material-icons">
-                        star
-                    </span>
-                    <span className="material-icons">
-                        star
-                    </span>
-                    <span className="material-icons">
-                        star
-                    </span>
-                </div>
+                <StarRating 
+                    rating={recipe.averageRating ? recipe.averageRating: 0}            
+                    readOnly={true}                                 
+                />
             </div>
         </StyledRecipeCard>
     )

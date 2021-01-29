@@ -2,18 +2,12 @@ import {createGlobalStyle} from 'styled-components'
 
 const GlobalStyle = createGlobalStyle`
 
-:root {
-	--bgPrimary: ${(theme) => theme.bgPrimary};
-	--bgSecondary: ${(theme) => theme.bgSecondary};
-	--textPrimary: ${(theme) => theme.textPrimary};
-	--textSecondary: ${(theme) => theme.textSecondary};
-	--primaryColor: ${(theme) => theme.primaryColor};
-	--secondaryColor: ${(theme) => theme.secondaryColor};
-}
-
 html {
 		font-size: 16px;
 		box-sizing: border-box;
+
+		
+
 	}
 	*, *:before, *:after {
 		padding: 0;

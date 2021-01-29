@@ -1,10 +1,65 @@
 import {useEffect, useState} from 'react'
 import styled from 'styled-components'
+import ReactPaginate from 'react-paginate'
 
 import CategoryFilter from '../components/categoryFilter/CategoryFilter'
 import RecipeCard from '../components/RecipeCard'
 
 import {useModalsContext, useAuthContext, useRecipeContext} from '../context'
+
+
+
+const StyledWrapper = styled.div`
+
+.pagination_container {
+        display:flex;
+        list-style: none;
+        justify-content: center;
+        margin-top: 30px;
+        li {
+            width: 30px;
+            height:30px;            
+            border-radius: 4px;
+            border: 1px solid ${({theme}) => theme.primaryColor};
+            color: ${({theme}) => theme.primaryColor};;
+            margin: 0px 3px;
+            cursor: pointer;
+            a {
+                color: inherit;
+                width:100%;
+                height:100%;
+                display:flex;
+                justify-content:center;
+                align-items:center;
+                outline: none;
+            }
+
+            a:hover {
+                color: inherit;
+            }
+
+        }
+
+        li:hover {
+            border: 1px solid ${({theme}) => theme.primaryColor};
+            color: ${({theme}) => theme.primaryColor};
+        }
+
+        .active_pagination {
+            color: #fff;
+            background: ${({theme}) => theme.primaryColor};
+            border: 1px solid ${({theme}) => theme.primaryColor};
+            outline: none;
+        }
+
+        .active_pagination:hover {
+            color: #fff;
+        }
+        
+    }
+
+`
+
 
 const StyledRecipesWrapper = styled.div`
     display: flex;
@@ -37,17 +92,31 @@ const StyledHeader = styled.div`
 
 const Home = () => {
 
-    const {recipes, getRecipes, recipesLoading} = useRecipeContext()
+    const {recipes, 
+        getRecipes, 
+        recipesLoading, 
+        setNameQuery, 
+        setCategoryQuery,  
+        numOfPages,
+        page,
+        setPage} = useRecipeContext()
 
     let {setAuthModal} = useModalsContext()
     let {user} = useAuthContext()
 
     useEffect( () => {
+        setNameQuery('')
+        setCategoryQuery('')
         getRecipes()
     }, [])
 
+
+    const paginationClickHandler = ({selected}) => {
+        setPage(selected)
+    }
+
     return (
-        <div>
+        <StyledWrapper>
             {!user &&  
                 <StyledHeader>
                     <p>Welcome to <span className='font2 brand'>My Recipes</span></p>
@@ -80,9 +149,22 @@ const Home = () => {
                     !recipesLoading && recipes && recipes.length == 0 && 
                     <p>No Recipes found</p>
                 }
-                
+                                
             </StyledRecipesWrapper>
-        </div>
+            
+                <ReactPaginate                     
+                        onPageChange={paginationClickHandler}
+                        previousLabel={<span className="material-icons">navigate_before</span>}
+                        nextLabel={<span className="material-icons">keyboard_arrow_right</span>}
+                        containerClassName="pagination_container"
+                        activeClassName={'active_pagination'}
+                        pageCount={numOfPages}       
+                        forcePage={page}             
+                        pageRangeDisplayed={2}
+                        marginPagesDisplayed={1}
+                    />
+            
+        </StyledWrapper>
     )
 }
 

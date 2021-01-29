@@ -13,6 +13,16 @@ const StyledRecipesWrapper = styled.div`
     display: flex;
     flex-wrap: wrap;
     justify-content: center;    
+
+    @keyframes spinner {
+        to {transform: rotate(-360deg)}
+    }
+
+    .loader {
+        animation: spinner 1.5s linear infinite;
+        font-size: 3rem;
+        color: ${({theme}) => theme.primaryColor};
+    }
 `
 
 const StyledAddBtn = styled.button`
@@ -48,17 +58,34 @@ const MyRecipes = () => {
         <AdminLayout>
             <CategoryFilter />
             <StyledRecipesWrapper>
-                {myRecipes.length > 0 ? myRecipes.map(recipe => 
+
+                {recipesLoading && 
+                    <span className="material-icons loader">
+                        cached
+                    </span>
+                }
+
+                {   
+                    !recipesLoading && 
+                    myRecipes &&
+                    myRecipes.map(recipe =>      
                         <RecipeCard 
                             recipe={recipe}
                             key={recipe._id}
-                        />
+                        />                
                     )
-                    :
-                    <p>
-                        No recipes yet, go ahead and create one :)
-                    </p>
                 }
+
+                {
+                    !recipesLoading && myRecipes && myRecipes.length == 0 &&
+                    
+                    <p>
+                        No recipes...
+                    </p>
+                    
+                }
+
+
             </StyledRecipesWrapper>
 
             <StyledAddBtn onClick={() => setNewRecipeModal('Add', true)}>+</StyledAddBtn>

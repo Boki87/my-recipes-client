@@ -1,5 +1,5 @@
 import {useState, useEffect} from 'react'
-import {Link, useLocation} from 'react-router-dom'
+import {Link, useLocation, useHistory} from 'react-router-dom'
 import styled from 'styled-components'
 
 import Logo from '../../assets/icons/restaurant.svg'
@@ -63,13 +63,26 @@ const StyledSearch = styled.div`
 const Nav = () => {
 
     let location = useLocation()
+    let history = useHistory()
 
     let {setNameQuery} = useRecipeContext()
 
     let [searchQuery, setSearchQuery] = useState('')
 
+    let [route, setRoute] = useState('')
 
     useEffect(() => {
+        //reset search query on route change
+        if(route != location.pathname) {            
+            setSearchQuery('')
+            setRoute(location.pathname)
+        }
+    }, [location.pathname])
+
+    useEffect(() => {
+        if(location.pathname != '/' && location.pathname != '/my-recipes') {
+            history.push('/')
+        }
 
         const timer = setTimeout(() => {
             searchHandler()
@@ -77,13 +90,10 @@ const Nav = () => {
 
         return () => clearTimeout(timer)
     }, [searchQuery])
-    
 
-    const searchHandler = () => {
-        
-        if(location.pathname == '/') {        
-            setNameQuery(searchQuery)            
-        }
+
+    const searchHandler = () => {              
+            setNameQuery(searchQuery)                    
     }
 
     return (
@@ -95,7 +105,7 @@ const Nav = () => {
                 </StyledLogo>
 
                 <StyledSearch>
-                    <input type="search" onInput={(e) => setSearchQuery(e.target.value)} placeholder='Search recipe...'/>
+                    <input type="search" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} placeholder='Search recipe...'/>
 
                     <span className="material-icons">
                         search
